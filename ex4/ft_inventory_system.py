@@ -2,7 +2,7 @@ import sys
 
 
 def parse_inventory(args: list[str]) -> dict[str, int]:
-    inventory: disct[str, int] = {}
+    inventory: dict[str, int] = {}
 
     for token in args:
         if ":" not in token:
@@ -79,8 +79,8 @@ def main() -> None:
             categories["Moderate"].update({name: qty})
         else:
             categories["Scarce"].update({name: qty})
-    
-    for category_name, category_items in category_items():
+
+    for category_name, category_items in categories.items():
         if len(category_items) > 0:
             print(f"{category_name}: {category_items}")
 
