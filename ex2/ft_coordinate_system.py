@@ -1,57 +1,46 @@
 import math
 
-
-def distance_3d(p1: tuple[int, int, int], p2: tuple[int, int, int]) -> float:
+def distance_3d(p1: tuple[float, float, float], p2: tuple[float, float, float]) -> float:
+    """Calcula a distância euclidiana entre dois pontos 3D"""
     x1, y1, z1 = p1
     x2, y2, z2 = p2
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
 
-
-def parse_coordinates(coord_str: str) -> tuple[int, int, int]:
-    parts = coord_str.split(",")
-    if len(parts) != 3:
-        raise ValueError("Expected format 'x,y,z' with 3 values")
-
-    x = int(parts[0])
-    y = int(parts[1])
-    z = int(parts[2])
-    return (x, y, z)
-
+def get_player_pos(prompt: str) -> tuple[float, float, float]:
+    """Solicita ao usuário coordenadas no formato x,y,z e repete até entrada válida"""
+    while True:
+        coord_str = input(prompt)
+        parts = coord_str.split(",")
+        if len(parts) != 3:
+            print("Invalid syntax")
+            continue
+        try:
+            x, y, z = [float(p.strip()) for p in parts]
+            return (x, y, z)
+        except ValueError as e:
+            for p in parts:
+                try:
+                    float(p.strip())
+                except ValueError:
+                    print(f"Error on parameter '{p.strip()}': {e}")
 
 def main() -> None:
     print("=== Game Coordinate System ===")
 
-    origin = (0, 0, 0)
-    pos = (10, 20, 5)
-    print("Position created:", pos)
-    dist = distance_3d(origin, pos)
-    print("Distance between", origin, "and", pos, ":", round(dist, 2))
+    print("Get a first set of coordinates")
+    first_pos = get_player_pos("Enter new coordinates as floats in format 'x,y,z': ")
+    print(f"Got a first tuple: {first_pos}")
+    print(f"It includes: X={first_pos[0]}, Y={first_pos[1]}, Z={first_pos[2]}")
 
-    coord_text = "3,4,0"
-    print('Parsing coordinates: "3,4,0"')
-    try:
-        parsed = parse_coordinates(coord_text)
-        print("Parsed position:", parsed)
-        dist2 = distance_3d(origin, parsed)
-        print("Distance between", origin, "and", parsed, ":", float(dist2))
-    except ValueError as e:
-        print("Error parsing coordinates:", e)
-        return
+    center = (0.0, 0.0, 0.0)
+    dist_to_center = distance_3d(first_pos, center)
+    print(f"Distance to center: {round(dist_to_center, 4)}")
 
-    bad_text = "abc,def,ghi"
-    print('Parsing invalid coordinates: "abc,def,ghi"')
-    try:
-        bad_pos = parse_coordinates(bad_text)
-        print("Parsed position:", bad_pos)
-    except ValueError as e:
-        print("Error parsing coordinates:", e)
-        print("Error details - type:", type(e).__name__ + ",", "Args:", e.args)
+    print("Get a second set of coordinates")
+    second_pos = get_player_pos("Enter new coordinates as floats in format 'x,y,z': ")
 
-    print("Unpacking demonstration:")
-    x, y, z = parsed
-    print("Player at x=" + str(x) + ", y=" + str(y) + ", z=" + str(z))
-    print("Coordinates: X=" + str(x) + ", Y=" + str(y) + ", Z=" + str(z))
-
+    dist_between = distance_3d(first_pos, second_pos)
+    print(f"Distance between the 2 sets of coordinates: {round(dist_between, 4)}")
 
 if __name__ == "__main__":
     main()
