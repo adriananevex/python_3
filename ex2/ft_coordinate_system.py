@@ -1,13 +1,11 @@
 import math
 
 def distance_3d(p1: tuple[float, float, float], p2: tuple[float, float, float]) -> float:
-    """Calcula a distância euclidiana entre dois pontos 3D"""
     x1, y1, z1 = p1
     x2, y2, z2 = p2
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
 
 def get_player_pos(prompt: str) -> tuple[float, float, float]:
-    """Solicita ao usuário coordenadas no formato x,y,z e repete até entrada válida"""
     while True:
         coord_str = input(prompt)
         parts = coord_str.split(",")

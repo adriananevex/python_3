@@ -11,6 +11,3 @@ else:
         print(f"Argument {i}: {arg}")
 
 print(f"Total arguments: {len(sys.argv)}")
-
-if __name__ == "__main__":
-    main()
