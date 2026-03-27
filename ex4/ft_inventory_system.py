@@ -6,96 +6,49 @@ def parse_inventory(args: list[str]) -> dict[str, int]:
 
     for token in args:
         if ":" not in token:
+            print(f"Error - invalid parameter '{token}'")
             continue
         name, qty_str = token.split(":", 1)
-        if not name:
+        if name in inventory:
+            print(f"Redundant item '{name}' - discarding")
             continue
         if not qty_str.isdigit():
+            print(f"Quantity error for '{name}': invalid literal for int() with base 10: '{qty_str}'")
             continue
 
-        qty = int(qty_str)
-        current = inventory.get(name, 0)
-        inventory.update({name: current + qty})
+        inventory[name] = int(qty_str)
 
     return inventory
 
 
 def main() -> None:
-    inventory = parse_inventory(sys.argv[1:])
-
     print("=== Inventory System Analysis ===")
 
-    total_items = 0
-    for qty in inventory.values():
-        total_items += qty
+    inventory = parse_inventory(sys.argv[1:])
 
-    print("Total items in inventory:", total_items)
-    print("Unique item types:", len(inventory.keys()))
+    print(f"Got inventory: {inventory}")
 
-    print("=== Current Inventory ===")
-    ordered_items = sorted(
-        inventory.items(),
-        key=lambda entry: entry[1],
-        reverse=True,
-    )
-    for name, qty in ordered_items:
-        percentage = 0.0
-        if total_items > 0:
-            percentage = (qty * 100) / total_items
-        print(f"{name}: {qty} units ({percentage: .1f}%)")
+    item_list = list(inventory.keys())
+    print(f"Item list: {item_list}")
 
-    print("=== Inventory Statictics ===")
-    if len(inventory) > 0:
-        most_name = None
-        most_qty = -1
-        least_name = None
-        least_qty = None
+    total_qty = sum(inventory.values())
+    print(f"Total quantity of the {len(inventory)} items:", total_qty)
 
-        for name, qty in inventory.items():
-            if qty > most_qty:
-                most_name = name
-                most_qty = qty
-            if least_qty is None or qty < least_qty:
-                least_name = name
-                least_qty = qty
+    for name, qty in inventory.items():
+        percent = (qty * 100) / total_qty if total_qty > 0 else 0
+        print(f"Item {name} represents {percent:.1f}%")
 
-        print(f"Most abundant: {most_name} ({most_qty} units)")
-        print(f"Least abundant: {least_name} ({least_qty} units)")
+    if inventory:
+        most_name = max(inventory, key=lambda k: inventory[k])
+        least_name = min(inventory, key=lambda k: inventory[k])
+        print(f"Item most abundant: {most_name} with quantity {inventory[most_name]}")
+        print(f"Item least abundant: {least_name} with quantity {inventory[least_name]}")
     else:
-        print("Most abundant: none")
-        print("Least abundant: none")
+        print("Item most abundant: none")
+        print("Item least abundant: none")
 
-    print("=== Item Categories ===")
-    categories = {
-        "Abundant": {},
-        "Moderate": {},
-        "Scarce": {},
-    }
-
-    for name, qty in inventory.items():
-        if qty >= 8:
-            categories["Abundant"].update({name: qty})
-        elif qty >= 5:
-            categories["Moderate"].update({name: qty})
-        else:
-            categories["Scarce"].update({name: qty})
-
-    for category_name, category_items in categories.items():
-        if len(category_items) > 0:
-            print(f"{category_name}: {category_items}")
-
-    print("=== Management Suggestions ===")
-    restock_needed = []
-    for name, qty in inventory.items():
-        if qty <= 1:
-            restock_needed.append(name)
-    print("Restock needed:", restock_needed)
-
-    print("=== Dictionay Properties Demo ===")
-    print("Dictionary keys:", list(inventory.keys()))
-    print("Dictionary values:", list(inventory.values()))
-    print("Sample lookup - sword' in inventory:", "sword" in inventory)
-
+    inventory["magic_item"] = 1
+    print("Updated inventory:", inventory)
 
 if __name__ == "__main__":
     main()
