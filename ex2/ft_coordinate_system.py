@@ -19,7 +19,7 @@ def get_player_pos(prompt: str) -> Point3D:
         try:
             x, y, z = [float(p.strip()) for p in parts]
             return (x, y, z)
-        except ValueError as e:
+        except ValueError:
             for p in parts:
                 try:
                     float(p.strip())
