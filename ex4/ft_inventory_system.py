@@ -13,7 +13,10 @@ def parse_inventory(args: list[str]) -> dict[str, int]:
             print(f"Redundant item '{name}' - discarding")
             continue
         if not qty_str.isdigit():
-            print(f"Quantity error for '{name}': invalid literal for int() with base 10: '{qty_str}'")
+            print(
+                f"Quantity error for '{name}': "
+                f"invalid literal for int() with base 10: '{qty_str}'"
+            )
             continue
 
         inventory[name] = int(qty_str)
@@ -41,14 +44,21 @@ def main() -> None:
     if inventory:
         most_name = max(inventory, key=lambda k: inventory[k])
         least_name = min(inventory, key=lambda k: inventory[k])
-        print(f"Item most abundant: {most_name} with quantity {inventory[most_name]}")
-        print(f"Item least abundant: {least_name} with quantity {inventory[least_name]}")
+        print(
+            f"Item most abundant: {most_name} "
+            f"with quantity {inventory[most_name]}"
+        )
+        print(
+            f"Item least abundant: {least_name} "
+            f"with quantity {inventory[least_name]}"
+        )
     else:
         print("Item most abundant: none")
         print("Item least abundant: none")
 
     inventory["magic_item"] = 1
     print("Updated inventory:", inventory)
+
 
 if __name__ == "__main__":
     main()

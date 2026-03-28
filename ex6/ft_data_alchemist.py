@@ -1,9 +1,20 @@
 import random
 
+
 def main():
     print("=== Game Data Alchemist ===")
 
-    players = ['Alice', 'bob', 'Charlie', 'dylan', 'Emma', 'Gregory', 'john', 'kevin', 'Liam']
+    players = [
+        "Alice",
+        "bob",
+        "Charlie",
+        "dylan",
+        "Emma",
+        "Gregory",
+        "john",
+        "kevin",
+        "Liam",
+    ]
     print("Initial list of players:", players)
 
     all_capitalized = [p.capitalize() for p in players]
