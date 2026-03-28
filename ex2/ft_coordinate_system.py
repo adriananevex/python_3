@@ -24,7 +24,9 @@ def get_player_pos(prompt: str) -> Point3D:
                 try:
                     float(p.strip())
                 except ValueError:
-                    print(f"Error on parameter '{p.strip()}': {e}")
+                    print(
+                        f"Error on parameter '{p.strip()}': "
+                        f"cound not convert string to float: '{p.strip()}'")
 
 
 def main() -> None:
@@ -39,7 +41,7 @@ def main() -> None:
     center = (0.0, 0.0, 0.0)
     dist_to_center = distance_3d(first_pos, center)
     print(f"Distance to center: {round(dist_to_center, 4)}")
-
+    print()
     print("Get a second set of coordinates")
     second_pos = get_player_pos(prompt)
 
