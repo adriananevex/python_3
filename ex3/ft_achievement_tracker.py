@@ -49,7 +49,7 @@ def main():
         print(f"Only {player} has:", unique)
 
     for player in players:
-        missing = all_distinct.difference(player_achievements[player])
+        missing = set(all_achievements).difference(player_achievements[player])
         print(f"{player} is missing:", missing)
 
 

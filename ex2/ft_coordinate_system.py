@@ -26,7 +26,7 @@ def get_player_pos(prompt: str) -> Point3D:
                 except ValueError:
                     print(
                         f"Error on parameter '{p.strip()}': "
-                        f"cound not convert string to float: '{p.strip()}'")
+                        f"could not convert string to float: '{p.strip()}'")
 
 
 def main() -> None:

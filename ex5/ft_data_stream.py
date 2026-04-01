@@ -1,5 +1,5 @@
 import random
-from typing import Generator, Tuple
+from typing import Generator, Tuple, List
 
 
 def gen_event() -> Generator[Tuple[str, str], None, None]:
@@ -20,7 +20,7 @@ def gen_event() -> Generator[Tuple[str, str], None, None]:
 
 
 def consume_event(
-    events: list[Tuple[str, str]],
+    events: List[Tuple[str, str]],
 ) -> Generator[Tuple[str, str], None, None]:
     while events:
         index = random.randrange(len(events))
@@ -37,11 +37,11 @@ def main():
         print(f"Event {i}: Player {player} did action {action}")
 
     event_list = [next(event_gen) for _ in range(10)]
-    print("Built list of 10 events:", event_list)
+    print(f"Built list of 10 events: {event_list}")
 
     for e in consume_event(event_list):
-        print("Got event from list:", e)
-        print("Remains in list:", event_list)
+        print(f"Got event from list: {e}")
+        print(f"Remains in list: {event_list}")
 
 
 if __name__ == "__main__":
