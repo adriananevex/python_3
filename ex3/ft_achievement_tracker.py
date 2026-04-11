@@ -2,7 +2,6 @@ import random
 
 
 def gen_player_achievements(all_achievements: list[str]) -> set[str]:
-    """Gera um conjunto aleatório de achievements para um jogador"""
     num = random.randint(3, len(all_achievements))
     return set(random.sample(all_achievements, num))
 
